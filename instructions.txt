@@ -1,0 +1,19 @@
+### STEPS TO GENERATE POSES FROM NOVEL REAL LIFE SCENES USING LOCAL LIGHT FIELD FUSION (https://github.com/Fyusion/LLFF)
+
+
+Begin by creating a base scene directory (e.g., scenedir/), and copying your images into a subdirectory called images/ (e.g., scenedir/images)
+
+1. Recover camera poses
+This script calls COLMAP to run structure from motion to get 6-DoF camera poses and near/far depth bounds for the scene.
+    python imgs2poses.py <your_scenedir>
+
+
+
+2. Generate Multiplane images (MPIs)
+
+Script uses LLFF paper's uses pretrained Tensorflow graph (make sure it exists in checkpoints/papermodel) to generate MPIs from the posed images. They will be saved in <your_mpidir>, a directory will be created by the script.
+
+python imgs2mpis.py <your_scenedir> <your_mpidir> \
+    [--checkpoint CHECKPOINT] \
+    [--factor FACTOR] [--width WIDTH] [--height HEIGHT] [--numplanes NUMPLANES] \
+    [--disps] [--psvs] 
