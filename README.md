@@ -8,7 +8,7 @@ Update on dynamic nerf model training  ...
 ## Running Instructions
 1. Recover camera poses and generate config file with Nerf training parameters
 
-    python data_pipeline.py --fps 20 --video sample_videos/helmet.MOV 
+    python data_pipeline.py --expname arm --fps 20 --video sample_videos/helmet.MOV 
 
 
 2. Train nerf using generated config file
