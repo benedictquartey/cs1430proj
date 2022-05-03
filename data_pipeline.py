@@ -28,9 +28,12 @@ def run_frame_extraction(vid_in, fps, out):
     print("Done extracting frames")
 
 
-def write_config_txt(name,scenedir):
+def write_config_txt(name,scenedir,config_out="./configs/" ):
 
-    f = open(f"{name}_config.txt", "x")
+    if not os.path.exists(config_out):
+        os.makedirs(config_out)
+
+    f = open(f"{config_out}/{name}.txt", "x")
 
     config = f"""expname = {name}_test\nbasedir = ./logs\ndatadir = {scenedir}\ndataset_type = llff\n\nfactor = 8\nllffhold = 8\n\nN_rand = 1024\nN_samples = 64\nN_importance = 64\n\nuse_viewdirs = True\nraw_noise_std = 1e0"""
     f.writelines(config)
@@ -46,7 +49,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="pipeline", description='...')
     parser.add_argument('--expname', default='dancingQ', type=str)
     parser.add_argument('--fps', default='2', type=str)
-    parser.add_argument('--video', default='sample_data/vid.mp4', type=str)
+    parser.add_argument('--video', default='sample_videos/vid.mp4', type=str)
     parser.add_argument('--out', default='output', type=str)
     parser.add_argument('--match_type', type=str, default='exhaustive_matcher', help='type of matcher used.  Valid options: \
 					exhaustive_matcher sequential_matcher.  Other matchers not supported at this time')
@@ -57,6 +60,8 @@ if __name__ == "__main__":
     if args.match_type != 'exhaustive_matcher' and args.match_type != 'sequential_matcher':
         print('ERROR: matcher type ' + args.match_type + ' is not valid.  Aborting')
         sys.exit()
+
+    args.out = f"./data/nerf_llff_data/{args.expname}"
     
     print("*******************************************\nExtracting Frames From Video \n*******************************************")
 
@@ -64,6 +69,7 @@ if __name__ == "__main__":
     run_frame_extraction(args.video, args.fps, args.out+"/images")
 
     print("\n*******************************************\nGenerating LLFF Poses From Images \n*******************************************")
+
 
     #Images to poses using COLMAP for structure from motion
     gen_poses(args.out, args.match_type)
