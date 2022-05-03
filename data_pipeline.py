@@ -5,7 +5,6 @@ import argparse
 from llff.poses.pose_utils import gen_poses  #From https://github.com/Fyusion/LLFF
  
 
-
 def run_frame_extraction(vid_in, fps, out):
 
     outfldr = out + "/"
@@ -26,6 +25,7 @@ def run_frame_extraction(vid_in, fps, out):
     
     cap.release()
     cv2.destroyAllWindows()
+    print("Done extracting frames")
 
 
 def write_config_txt(name,scenedir):
@@ -58,17 +58,17 @@ if __name__ == "__main__":
         print('ERROR: matcher type ' + args.match_type + ' is not valid.  Aborting')
         sys.exit()
     
-    print("*******************************************\n Extracting Frames From Video \n*******************************************")
+    print("*******************************************\nExtracting Frames From Video \n*******************************************")
 
     #Frame extraction from video
     run_frame_extraction(args.video, args.fps, args.out+"/images")
 
-    print("\n*******************************************\n Generating LLFF Poses From Images \n*******************************************")
+    print("\n*******************************************\nGenerating LLFF Poses From Images \n*******************************************")
 
     #Images to poses using COLMAP for structure from motion
     gen_poses(args.out, args.match_type)
 
-    print("\n*******************************************\n Writing Nerf Training Config File \n*******************************************")
+    print("\n*******************************************\nWriting Nerf Training Config File \n*******************************************")
     #Write config txt file with parameters for training nerf
     write_config_txt(args.expname,args.out)
 
