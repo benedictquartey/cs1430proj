@@ -7,3 +7,7 @@ configargparse
 tensorboard>=2.0
 tqdm
 opencv-python
+PyMCubes
+trimesh
+jupyter
+lpips
