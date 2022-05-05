@@ -35,7 +35,7 @@ def write_config_txt(name,scenedir,config_out="./configs/" ):
 
     f = open(f"{config_out}/{name}.txt", "x")
 
-    config = f"""expname = {name}_test\nbasedir = ./logs\ndatadir = {scenedir}\ndataset_type = llff\n\nfactor = 8\nllffhold = 8\n\nN_rand = 1024\nN_samples = 64\nN_importance = 64\n\nuse_viewdirs = True\nraw_noise_std = 1e0"""
+    config = f"""expname = {name}_test\nbasedir = ./logs\ndatadir = {scenedir}\ndataset_type = llff\n\nfactor = 8\nllffhold = 8\n\nN_rand = 1024\nN_samples = 64\nN_importance = 64\n\nuse_viewdirs = True\nraw_noise_std = 1e0\nno_batching = True"""
     f.writelines(config)
     f.close()
     print(f"Done writing {name}_config.txt\n")
